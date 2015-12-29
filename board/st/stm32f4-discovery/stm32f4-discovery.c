@@ -64,16 +64,7 @@ out:
 
 int dram_init(void)
 {
-	u32 freq;
-	int rv;
 	udelay(100);
-
-	FMC_BUSY_WAIT();
-
-	writel(FMC_SDCMR_BANK_2 | FMC_SDCMR_MODE_NORMAL,
-	       &STM32_SDRAM_FMC->sdcmr);
-
-	FMC_BUSY_WAIT();
 
 	/*
 	 * Fill in global info with description of SRAM configuration
@@ -83,7 +74,7 @@ int dram_init(void)
 
 	gd->ram_size = CONFIG_SYS_RAM_SIZE;
 
-	return rv;
+	return 0;
 }
 
 static const struct stm32_serial_platdata serial_platdata = {
@@ -104,6 +95,7 @@ int board_early_init_f(void)
 {
 	coloured_LED_init();
 	red_led_on();
+	green_led_on();
 
 	int res;
 	res = uart_setup_gpio();
