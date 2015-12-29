@@ -1,0 +1,4 @@
+
+CROSS_COMPILE=arm-none-eabi- make stm32f4-discovery_defconfig all -j4
+arm-none-eabi-objcopy -O ihex u-boot u-boot.hex
+st-flash --reset write u-boot.hex  0x08000000 
