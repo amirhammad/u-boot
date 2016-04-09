@@ -33,3 +33,9 @@ void green_led_on(void)
 {
 	gpio_set_value(CONFIG_GREEN_LED, 1);
 }
+
+void custom_led_on(void)
+{
+	gpio_direction_output(62, 0);
+	gpio_set_value(62, 1);
+}

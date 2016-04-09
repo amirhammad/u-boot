@@ -20,7 +20,7 @@
 
 #define CONFIG_SYS_FLASH_BASE		0x08000000
 
-#define CONFIG_SYS_INIT_SP_ADDR		0x10010000
+#define CONFIG_SYS_INIT_SP_ADDR		0x2001d000
 #define CONFIG_SYS_TEXT_BASE		0x08000000
 
 #define CONFIG_SYS_ICACHE_OFF
@@ -29,26 +29,24 @@
 /*
  * Configuration of the external SDRAM memory
  */
-#define CONFIG_NR_DRAM_BANKS		1
+#define CONFIG_NR_DRAM_BANKS		0
 #define CONFIG_SYS_RAM_SIZE		( 112 << 10)
-/*#define CONFIG_SYS_RAM_CS		1
-#define CONFIG_SYS_RAM_FREQ_DIV		2*/
 #define CONFIG_SYS_RAM_BASE		0x20000000
 #define CONFIG_SYS_SDRAM_BASE		CONFIG_SYS_RAM_BASE
-#define CONFIG_SYS_LOAD_ADDR		0x20400000
-#define CONFIG_LOADADDR			0x20400000
+#define CONFIG_SYS_LOAD_ADDR		0x20010000
+#define CONFIG_LOADADDR			0x20010000
 
 #define CONFIG_SYS_MAX_FLASH_SECT	12
-#define CONFIG_SYS_MAX_FLASH_BANKS	2
+#define CONFIG_SYS_MAX_FLASH_BANKS	1
 
 #define CONFIG_ENV_IS_NOWHERE
-#define CONFIG_ENV_OFFSET		(100 << 10)
-#define CONFIG_ENV_SECT_SIZE		(1 << 10)
+#define CONFIG_ENV_OFFSET		(256 << 10)
+#define CONFIG_ENV_SECT_SIZE		(128 << 10)
 #define CONFIG_ENV_SIZE			(8 << 10)
 
 #define CONFIG_BOARD_SPECIFIC_LED
 #define CONFIG_RED_LED			60
-#define CONFIG_GREEN_LED		63
+#define CONFIG_GREEN_LED		62
 
 #define CONFIG_STM32_GPIO
 #define CONFIG_STM32_SERIAL
@@ -64,29 +62,28 @@
 #define CONFIG_INITRD_TAG
 #define CONFIG_REVISION_TAG
 
-#define CONFIG_SYS_CBSIZE		1024
+#define CONFIG_SYS_CBSIZE		512
 #define CONFIG_SYS_PBSIZE		(CONFIG_SYS_CBSIZE \
 					+ sizeof(CONFIG_SYS_PROMPT) + 16)
 
 #define CONFIG_SYS_MAXARGS		16
 
-#define CONFIG_SYS_MALLOC_LEN		(2 << 10)
+#define CONFIG_SYS_MALLOC_LEN		(10 << 10)
 
-#define CONFIG_STACKSIZE		(8192 << 10)
+#define CONFIG_STACKSIZE		(12 << 10)
 
 #define CONFIG_BAUDRATE			115200
 #define CONFIG_BOOTARGS							\
 	"console=ttyS0,115200 earlyprintk consoleblank=0 ignore_loglevel"
 #define CONFIG_BOOTCOMMAND						\
-	"run bootcmd_romfs"
+	/*"run bootcmd_romfs"*/
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"bootargs_romfs=uclinux.physaddr=0x08180000 root=/dev/mtdblock0\0" \
 	"bootcmd_romfs=setenv bootargs ${bootargs} ${bootargs_romfs};" \
 	"bootm 0x08044000 - 0x08042000\0"
 
-#define CONFIG_BOOTDELAY		3
-#define CONFIG_AUTOBOOT
+#define CONFIG_BOOTDELAY		10000000
 
 /*
  * Command line configuration.

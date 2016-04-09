@@ -23,6 +23,35 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
+static inline void _dly(int time)
+{
+	volatile int i = time;
+	while (i--);
+}
+
+void show_boot_progress(int val)
+{
+	int uval = val < 0 ? (-val) : val; 
+	int i;
+	for (i = 0; i < uval; i++) {
+		green_led_on();
+		_dly(10000);
+		green_led_off();
+		_dly(1000);
+	}	
+	if (val < 0) {
+		green_led_on();
+		_dly(100000);
+		green_led_off();
+		_dly(100000);
+	} else {
+		green_led_on();
+		_dly(20000);
+		green_led_off();
+		_dly(100);
+	}
+}
+
 const struct stm32_gpio_ctl gpio_ctl_gpout = {
 	.mode = STM32_GPIO_MODE_OUT,
 	.otype = STM32_GPIO_OTYPE_PP,
@@ -35,7 +64,7 @@ const struct stm32_gpio_ctl gpio_ctl_usart = {
 	.mode = STM32_GPIO_MODE_AF,
 	.otype = STM32_GPIO_OTYPE_PP,
 	.speed = STM32_GPIO_SPEED_50M,
-	.pupd = STM32_GPIO_PUPD_UP,
+	.pupd = STM32_GPIO_PUPD_NONE,
 	.af = STM32_GPIO_USART
 };
 
@@ -64,7 +93,7 @@ out:
 
 int dram_init(void)
 {
-	udelay(100);
+	//udelay(100);
 
 	/*
 	 * Fill in global info with description of SRAM configuration
@@ -94,9 +123,6 @@ u32 get_board_rev(void)
 int board_early_init_f(void)
 {
 	coloured_LED_init();
-	red_led_on();
-	green_led_on();
-
 	int res;
 	res = uart_setup_gpio();
 	if (res)
@@ -108,6 +134,7 @@ int board_early_init_f(void)
 int board_init(void)
 {
 	gd->bd->bi_boot_params = CONFIG_SYS_SDRAM_BASE + 0x100;
+	//custom_led_on();
 
 	return 0;
 }
